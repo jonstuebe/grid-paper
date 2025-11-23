@@ -1,6 +1,10 @@
 /**
   * Resets and Variables
   */
+:root {
+  print-color-adjust: exact;
+}
+
 html,
 body {
   font-family: monospace;
@@ -16,7 +20,8 @@ body {
   --gridsize-cm: calc(var(--gridsize) * 1cm);
   --strokewidth-mm: calc(var(--strokewidth) * 1mm);
   --strokewidth-deg: calc((var(--strokewidth) / 2) * 1deg);
-  --grid-color: color(from var(--accent) srgb r g b / 0.5);;
+  --grid-color: color(from var(--accent) srgb r g b / 0.5);
+  ;
 
   padding: 0.5cm;
 }
@@ -25,39 +30,44 @@ body {
   * Base Grid Styles
   */
 [data-grid] {
-  --quadrant: /* 0deg */
+  --quadrant:
+    /* 0deg */
     var(--grid-color) calc(0deg - (var(--strokewidth-deg) / 2)),
     var(--grid-color) calc(var(--strokewidth-deg) / 2),
     transparent calc(var(--strokewidth-deg) / 2),
     transparent calc((var(--gridsize) / 2) * 15deg - (var(--strokewidth-deg) / 2));
 
-  --bottom-gradient: linear-gradient(
-      to bottom,
-      /* 	50% */ transparent 50%,
+  --bottom-gradient: linear-gradient(to bottom,
+      /* 	50% */
+      transparent 50%,
       var(--grid-color) 50%,
       var(--grid-color) calc(50% + var(--strokewidth-mm)),
       transparent calc(50% + var(--strokewidth-mm)),
-      /* 54.0*/ transparent 54.0%,
+      /* 54.0*/
+      transparent 54.0%,
       var(--grid-color) 54.0%,
       var(--grid-color) calc(54.0% + var(--strokewidth-mm)),
       transparent calc(54.0% + var(--strokewidth-mm)),
-      /* 	61.0 */ transparent 61.0%,
+      /* 	61.0 */
+      transparent 61.0%,
       var(--grid-color) 61.0%,
       var(--grid-color) calc(61.0% + var(--strokewidth-mm)),
       transparent calc(61.0% + var(--strokewidth-mm)),
-      /* 72.0 */ transparent 72.0%,
+      /* 72.0 */
+      transparent 72.0%,
       var(--grid-color) 72.0%,
       var(--grid-color) calc(72.0% + var(--strokewidth-mm)),
       transparent calc(72.0% + var(--strokewidth-mm)),
-      /* 87.0 */ transparent 87.0%,
+      /* 87.0 */
+      transparent 87.0%,
       var(--grid-color) 87.0%,
       var(--grid-color) calc(87.0% + var(--strokewidth-mm)),
       transparent calc(87.0% + var(--strokewidth-mm)),
-      /* 100% */ transparent 100%,
+      /* 100% */
+      transparent 100%,
       var(--grid-color) 100%,
       var(--grid-color) calc(100% + var(--strokewidth-mm)),
-      transparent calc(100% + var(--strokewidth-mm))
-    );
+      transparent calc(100% + var(--strokewidth-mm)));
 
   background-size: var(--gridsize-cm) var(--gridsize-cm);
   background-repeat: repeat, repeat;
@@ -68,59 +78,45 @@ body {
   * Grid Variants
   */
 [data-grid="grid"] {
-  background-image: linear-gradient(
-      to right,
+  background-image: linear-gradient(to right,
       var(--grid-color) var(--strokewidth-mm),
       transparent var(--strokewidth-mm),
-      transparent var(--gridsize-cm)
-    ),
-    linear-gradient(
-      to bottom,
+      transparent var(--gridsize-cm)),
+    linear-gradient(to bottom,
       var(--grid-color) var(--strokewidth-mm),
       transparent var(--strokewidth-mm),
-      transparent var(--gridsize-cm)
-    );
+      transparent var(--gridsize-cm));
 }
 
 [data-grid="dot-grid"] {
-  background-image: radial-gradient(
-    var(--strokewidth-mm),
-    var(--grid-color),
-    var(--grid-color) var(--strokewidth-mm),
-    transparent
-  );
+  background-image: radial-gradient(var(--strokewidth-mm),
+      var(--grid-color),
+      var(--grid-color) var(--strokewidth-mm),
+      transparent);
 }
 
 [data-grid="isomorphic"] {
-  background: repeating-linear-gradient(
-      150deg,
+  background: repeating-linear-gradient(150deg,
       var(--grid-color),
       var(--grid-color) var(--strokewidth-mm),
       transparent calc(var(--strokewidth-mm) + 1px),
-      transparent var(--gridsize-cm)
-    ),
-    repeating-linear-gradient(
-      30deg,
+      transparent var(--gridsize-cm)),
+    repeating-linear-gradient(30deg,
       var(--grid-color),
       var(--grid-color) var(--strokewidth-mm),
       transparent calc(var(--strokewidth-mm) + 1px),
-      transparent var(--gridsize-cm)
-    );
+      transparent var(--gridsize-cm));
 }
 
 [data-grid="isomorphic-dot"] {
-  background-image: radial-gradient(
-      var(--strokewidth-mm),
+  background-image: radial-gradient(var(--strokewidth-mm),
       var(--grid-color),
       var(--grid-color) var(--strokewidth-mm),
-      transparent
-    ),
-    radial-gradient(
-      var(--strokewidth-mm),
+      transparent),
+    radial-gradient(var(--strokewidth-mm),
       var(--grid-color),
       var(--grid-color) var(--strokewidth-mm),
-      transparent
-    );
+      transparent);
   background-position: top left, var(--gridsize-cm) calc(var(--gridsize-cm) / 2);
   background-size: calc(var(--gridsize-cm) * 2) var(--gridsize-cm);
 }
@@ -141,6 +137,19 @@ body {
   background-repeat: no-repeat;
 }
 
+[data-grid="dual-hex"] {
+  --hex-height: 0.866;
+  --w: var(--gridsize-cm);
+  --h: calc(var(--w) * var(--hex-height));
+  --2h: calc(var(--h) * 2);
+
+  background-image:
+    linear-gradient(to bottom, var(--grid-color) var(--strokewidth-mm), transparent var(--strokewidth-mm), transparent var(--gridsize-cm)),
+    repeating-linear-gradient(to bottom right, var(--grid-color), var(--grid-color) var(--strokewidth-mm), transparent calc(var(--strokewidth-mm) + 1px), transparent var(--h)),
+    repeating-linear-gradient(to top right, var(--grid-color), var(--grid-color) var(--strokewidth-mm), transparent calc(var(--strokewidth-mm) + 1px), transparent var(--h));
+  background-size: var(--w) var(--h), var(--w) var(--2h), var(--w) var(--2h);
+}
+
 /**
   * HTML Styles
   */
@@ -149,7 +158,9 @@ header {
   gap: 0.25cm;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-size: 1rem;
   margin: 0;
 }
@@ -221,6 +232,7 @@ button[popovertarget] {
 }
 
 .knobs {
+
   input,
   select {
     font-family: inherit;
@@ -239,10 +251,6 @@ button[popovertarget] {
   * Print Styles
   */
 @media print {
-  body {
-    print-color-adjust: exact;
-  }
-
   .overlay {
     display: none;
   }
